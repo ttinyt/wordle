@@ -1,5 +1,14 @@
-import React from "react";
+import React from 'react'
 
-export default function Grid({currentGuess, guesses, turn}) {
-  return <div>Grid</div>;
+// components
+import Row from './Row'
+
+export default function Grid({ guesses, currentGuess, turn }) {
+    return (
+        <div>
+            {guesses.map((g, i) => {
+                return <Row key={i} />
+            })}
+        </div>
+    )
 }
