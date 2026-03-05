@@ -28,6 +28,7 @@ const useWordle = (solution) => {
     // so that we always know their currentGuess 
 
     return { turn, currentGuess, guesses, isCorrect, handleKeyup }
+    //the ones we need to call from others
 }
 
 export default useWordle
