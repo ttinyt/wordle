@@ -50,7 +50,7 @@ const useWordle = (solution) => {
             return [...prevHistory, currentGuess] //guess history in string format
         })
         setTurn((prevTurn) => {
-            return prevTurn +1
+            return prevTurn + 1
         })
         setCurrentGuess('')
     }
