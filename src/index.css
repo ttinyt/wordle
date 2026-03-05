@@ -67,10 +67,14 @@ h1 {
   animation-delay: 0.8s;
 }
 
+.row.current>div.filled {
+  animation: bounce 0.2s ease-in-out forwards;
+}
+
 /* keyframe animations */
 @keyframes flip {
   0% {
-    transform: rotateX(0); 
+    transform: rotateX(0);
     background: #fff;
     border-color: #333;
   }
@@ -88,9 +92,26 @@ h1 {
   }
 
   100% {
-    transform: rotateX(0deg);
+    transform: rotateX(0deg); /*back to original position*/
     background: var(--background);
     border-color: var(--border-color);
     color: #eee;
+  }
+}
+
+/**/
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+    border-color: #ddd;
+  }
+
+  50% {
+    transform: scale(1.2); /*halfway through animation. 1.2 scaling*/
+  }
+
+  100% {
+    transform: scale(1); /*back to original size*/
+    border-color: #333;
   }
 }
