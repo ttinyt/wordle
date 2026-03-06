@@ -5,9 +5,9 @@ export default function Keypad() {
 
     useEffect(() => {
         fetch('http://localhost:3001/letters')
-            .then(res => res.json())
-            .then(json => {
-                setLetters(json)
+            .then(res => res.json()) //responce object, pass json to
+            .then(json => { //promised array of objects
+                setLetters(json) 
             })
     }, [])
 
