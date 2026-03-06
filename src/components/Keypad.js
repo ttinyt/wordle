@@ -1,24 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import backspace from './assets/backspace-icon.jpg'; 
 
 export default function Keypad({ usedKeys }) {
-    const [letters, setLetters] = useState(null)
-
-    useEffect(() => {
-        fetch('http://localhost:3001/letters')
-            .then(res => res.json()) //responce object, pass json to
-            .then(json => { //promised array of objects
-                setLetters(json)
-            })
-    }, [])
+    const topRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"]
+    const middleRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l"]
+    const bottomRow = ["z", "x", "c", "v", "b", "n", "m"]
 
     return (
-        <div className="keypad">
-            {letters && letters.map(l => {
-                const color = usedKeys[l.key]
+        <div className='keypad'>
+            {topRow.map((l) => {
+                const color = usedKeys[l]
                 return (
-                    <div key={l.key} className={color}>{l.key}</div>
+                    <div key={l} className={color}>{l}</div>
                 )
             })}
+            <br />
+            {middleRow.map((l) => {
+                const color = usedKeys[l]
+                return (
+                    <div key={l} className={color}>{l}</div>
+                )
+            })}
+            <br />
+            <div key="Enter" style={{ width: "15%", fontSize: "13px" }}>Enter</div>
+            {bottomRow.map((l) => {
+                const color = usedKeys[l]
+                return (
+                    <div key={l} className={color}>{l}</div>
+                )
+            })}
+            <div key="Backspace" style={{
+                width: "15%", textAlign: "center", whiteSpace: "nowrap"
+            }}
+                onClick={() => handleKeyupVirtual("Backspace")}>
+
+                <span className="helper" style={{
+                    display: "inline-block", height: "100%", verticalAlign: "middle"
+                }}>
+                </span>
+                <img src={backspace} alt = "backspace-icon"
+                    style={{ width: "20px", verticalAlign: "middle" }}>
+                </img>
+            </div>        
         </div>
     )
 }
