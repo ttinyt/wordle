@@ -12,8 +12,8 @@ const useWordle = (solution) => {
     // format a guess into an array of letter objects 
     // e.g. [{key: 'a', color: 'yellow'}]
     const formatGuess = () => {
-        let solutionArray = [...solution] //turning string to array of letters
-        let formattedGuess = [...currentGuess].map((l) => { //l for letter
+        let solutionArray = [...solution.toLowerCase()] //turning string to array of letters
+        let formattedGuess = [...currentGuess.toLowerCase()].map((l) => { //l for letter
             return {key: l, color: 'grey'} //default grey colour
         }) //so each letter has a key and color property
 
@@ -40,7 +40,7 @@ const useWordle = (solution) => {
     // update the isCorrect state if the guess is correct
     // add one to the turn state
     const addNewGuess = (formattedGuess) => {
-        if(currentGuess === solution){
+        if(currentGuess.toLowerCase() === solution.toLowerCase()){
             setIsCorrect(true)
         }
         setGuesses((prevGuesses) => { // function as an argument to return the new states
@@ -49,7 +49,7 @@ const useWordle = (solution) => {
             return newGuesses //updated
         })
         setHistory((prevHistory) => {
-            return [...prevHistory, currentGuess] //guess history in string format
+            return [...prevHistory, currentGuess.toLowerCase()] //guess history in string format
         })
         setTurn((prevTurn) => {
             return prevTurn + 1
@@ -80,7 +80,8 @@ const useWordle = (solution) => {
 
     // handle keyup event & track current guess
     // if user presses enter, add the new guess
-    const handleKeyup = ({ key }) => {
+    const handleKeyUpVirtual = (key) => {
+
         if (key === 'Enter') {
             // only add guess if turn is less than 5
             if (turn > 5) {
@@ -88,7 +89,7 @@ const useWordle = (solution) => {
                 return // doesnt continue if all turnd are used
             }
             // do not allow duplicate words
-            if (history.includes(currentGuess)) {
+            if (history.includes(currentGuess.toLowerCase())) {
                 console.log('you already tried that word.')
                 return
             }
@@ -105,13 +106,23 @@ const useWordle = (solution) => {
         }
         if (/^[A-Za-z]$/.test(key)) {
             if (currentGuess.length < 5) {
-                setCurrentGuess(prev => prev + key)
+                setCurrentGuess(prev => prev + key.toLowerCase())
             }
         }
     }
     // so that we always know their currentGuess 
 
-    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup }
+    const handleKeyup = ({ key }) => {
+        handleKeyUpVirtual(key)
+        return
+    }
+
+    //handle virtual keyboard
+    const handleClick = (key) => {
+        handleKeyUpVirtual(key)
+    }
+
+    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, handleClick }
     //the ones we need to call from others
 }
 
