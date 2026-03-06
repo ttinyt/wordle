@@ -6,6 +6,8 @@ const useWordle = (solution) => {
     const [guesses, setGuesses] = useState([...Array(6)]) // each guess is an array. length 6 guesses.
     const [history, setHistory] = useState([]) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false) // false until win
+    const [usedKeys, setUsedKeys] = useState({}) //{a: 'green', b: 'yellow', c: 'grey'}
+
 
     // format a guess into an array of letter objects 
     // e.g. [{key: 'a', color: 'yellow'}]
@@ -52,6 +54,27 @@ const useWordle = (solution) => {
         setTurn((prevTurn) => {
             return prevTurn + 1
         })
+        setUsedKeys((prevUsedKeys) =>{
+            let newKeys = {...prevUsedKeys}
+
+            formattedGuess.forEach((l) => {
+                const currentColor = newKeys[l.key] //color if exist
+                
+                if(l.color === 'green'){
+                    newKeys[l.key] = 'green'
+                    return
+                }
+                if (l.color === 'yellow' && currentColor !== 'green') {
+                    newKeys[l.key] = 'yellow'
+                    return
+                }
+                if (l.color === 'grey' && currentColor !== ('green' || 'yellow')) {
+                    newKeys[l.key] = 'grey'
+                    return
+                }
+            })
+            return newKeys
+        })
         setCurrentGuess('')
     }
 
@@ -88,7 +111,7 @@ const useWordle = (solution) => {
     }
     // so that we always know their currentGuess 
 
-    return { turn, currentGuess, guesses, isCorrect, handleKeyup }
+    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup }
     //the ones we need to call from others
 }
 
