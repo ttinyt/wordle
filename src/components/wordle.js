@@ -10,16 +10,11 @@ export default function Wordle({ solution }) {
     const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
-        window.addEventListener('keyup', handleKeyup)
 
-        if(isCorrect){
+        if(isCorrect || turn > 5){
             setTimeout(() => setShowModal(true), 2000)
-            window.removeEventListener('keyup', handleKeyup)
-        }
-
-        if (turn > 5){
-            setTimeout(() => setShowModal(true), 2000)
-            window.removeEventListener('keyup', handleKeyup)
+        } else {
+            window.addEventListener("keyup", handleKeyup);
         }
 
         return () => window.removeEventListener('keyup', handleKeyup) //handlekeyup is a dependancy
@@ -28,14 +23,13 @@ export default function Wordle({ solution }) {
 
     return (
         <div>
-            <div>solution - {solution}</div>
-            <div>Current Guess - {currentGuess}</div>
             <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
-            <Keypad usedKeys={usedKeys} handleClick={handleClick} />
-            {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} />}
+            <Keypad usedKeys={usedKeys} handleClick={handleClick} isCorrect={isCorrect} turn={turn} />
+            {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} setShowModal={setShowModal} />}
         </div>
     )
 }
 
-
+//<div>solution - {solution}</div>
+//<div>Current Guess - {currentGuess}</div>
 //react snippet shortcut command+shift+r
