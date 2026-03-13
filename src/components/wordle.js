@@ -26,7 +26,7 @@ export default function Wordle({ solution }) {
             window.addEventListener("keyup", handleKeyup);
         }
 
-        return () => window.removeEventListener('keyup', handleKeyup) //handlekeyup is a dependancy
+        return () => window.removeEventListener('keyup', handleKeyup) //handlekeyup is a dependency
     }, [handleKeyup, isCorrect, turn]) //dependencies
 
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import Statistics from './Statistics'
 
 export default function Modal({ isCorrect, solution, turn, setShowModal }) {
     return (
@@ -20,6 +21,7 @@ export default function Modal({ isCorrect, solution, turn, setShowModal }) {
                     <p>Better luck next time :)</p>
                 </div>
             )}
+            <Statistics turn={turn} isCorrect={isCorrect} />
         </div>
     )
 }
