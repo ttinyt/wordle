@@ -24,6 +24,8 @@ function App() {
 
 export default App
 
+/* localStorage.removeItem(“wordlestruckStatistics”); */
+
 /* 
 
 data we need to track:
@@ -74,3 +76,4 @@ Serving./ public directory if it exists
 Endpoints:
 http://localhost:3001/solutions
 */
+
