@@ -8,7 +8,7 @@ export default function Keypad({ usedKeys, handleClick, isCorrect, turn }) {
     const pointerEvents = isLocked ? "none" : "auto"
 
     return (
-        <div className='keypad'>
+        <div className="keypad">
             {topRow.map((l) => {
                 const color = usedKeys[l]
                 return (
