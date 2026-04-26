@@ -1,3 +1,16 @@
+# Wordle clone in react
+
+This is my first project to learn react!
+I love playing wordle, so thought I would make my own take on it.
+This is still a work in progress, but enjoy :)
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
