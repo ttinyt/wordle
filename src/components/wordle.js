@@ -5,11 +5,17 @@ import Grid from './Grid'
 import Keypad from './Keypad'
 import Modal from './Modal'
 
-export default function Wordle({ solution }) {
-    const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, handleClick } = useWordle(solution)
+export default function Wordle({ solution, validWords }) {
+    const [shaky, setShaky] = useState(false)
+    const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, handleClick } = useWordle(solution, validWords, setShaky)
     const [showModal, setShowModal] = useState(false)
+    const isGameOver = isCorrect || turn > 5;
 
     useEffect(() => {
+
+        if (!isCorrect && turn <= 5){ //if game is not over
+            window.addEventListener('keyup', handleKeyup)
+        }
 
         if(isCorrect || turn > 5){
             setTimeout(() => setShowModal(true), 2000)
@@ -22,18 +28,18 @@ export default function Wordle({ solution }) {
             let index = isCorrect ? turn : 0; //if true turn, if false 0
             objStatistics[index] = Number(objStatistics[index]) + 1; //increment count for reuslt
             localStorage.wordlestruckStatistics = JSON.stringify(objStatistics);
-        } else {
-            window.addEventListener("keyup", handleKeyup);
         }
-
+        
         return () => window.removeEventListener('keyup', handleKeyup) //handlekeyup is a dependency
-    }, [handleKeyup, isCorrect, turn]) //dependencies
+    }, [handleKeyup, isCorrect, turn, showModal]) //dependencies
 
 
     return (
         <div>
-            <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
-            <Keypad usedKeys={usedKeys} handleClick={handleClick} isCorrect={isCorrect} turn={turn} />
+            <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} shaky={shaky} />
+            {!isGameOver && ( //so that we cant write more after game is over
+                <Keypad usedKeys={usedKeys} handleClick={handleClick} isCorrect={isCorrect} turn={turn} />
+            )}
             {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} setShowModal={setShowModal} />}
         </div>
     )

@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Row({ guess, currentGuess }) {
+export default function Row({ guess, currentGuess, shaky }) {
 
+    let currentClassName = shaky ? "row current shaky" : "row current"
+    
     if (guess) {
         return (
             <div className="row past">
@@ -16,7 +18,7 @@ export default function Row({ guess, currentGuess }) {
         let letters = currentGuess.split('')
 
         return (
-            <div className="row current">
+            <div className= {currentClassName}>
                 {letters.map((letter, i) => (
                     <div key={i} className="filled">{letter}</div>
                 ))}

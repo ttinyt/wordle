@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useWordle = (solution) => {
+const useWordle = (solution, validWords, setShaky) => {
     const [turn, setTurn] = useState(0) //start on turn 0
     const [currentGuess, setCurrentGuess] = useState('') // what the user is currently clicking on the keyboard
     const [guesses, setGuesses] = useState([...Array(6)]) // each guess is an array. length 6 guesses.
@@ -90,6 +90,8 @@ const useWordle = (solution) => {
             }
             // do not allow duplicate words
             if (history.includes(currentGuess.toLowerCase())) {
+                setShaky(true)
+                setTimeout(() => setShaky(false), 600)
                 console.log('you already tried that word.')
                 return
             }
@@ -98,8 +100,16 @@ const useWordle = (solution) => {
                 console.log('word must be 5 chars.')
                 return
             }
+            // check if valid word
+            if (!validWords.includes(currentGuess.toLowerCase())) {
+                setShaky(true)
+                setTimeout(() => setShaky(false), 600)
+                console.log('word is not in word list.')
+                return
+            }
             const formatted = formatGuess()
             addNewGuess(formatted)        }
+
         if (key === 'Backspace') {
             setCurrentGuess(prev => prev.slice(0, -1))
             return
