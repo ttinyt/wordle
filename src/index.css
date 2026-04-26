@@ -75,6 +75,10 @@ h1 {
   animation: bounce 0.2s ease-in-out forwards;
 }
 
+.row.current.shaky {
+  animation: horizontal-shaking 0.35s;
+}
+
 /* keypad */
 
 .keypad {
@@ -212,6 +216,35 @@ h1 {
     border-color: #333;
   }
 }
+
+/* shaking for if invalid word or repeated guess */
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0)
+  }
+  15% {
+    transform: translateX(5px)
+  }
+  30% {
+    transform: translateX(-5px)
+  }
+  45% {
+    transform: translateX(5px)
+  }
+  60% {
+    transform: translateX(0)
+  }
+  75% {
+    transform: translateX(5px)
+  }
+  90% {
+    transform: translateX(-5px)
+  }
+  100% {
+    transform: translateX(5px)
+  }
+}
+
 
 /* Responsive keypad */
 @media (max-width: 700px) {
