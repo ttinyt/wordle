@@ -3,21 +3,37 @@ import Wordle from './components/Wordle' //this is not incorrect boo
 
 function App() {
   const [solution, setSolution] = useState(null)
+  const [validWords, setValidWords] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3001/solutions')
-      .then(res => res.json())
-      .then(json => {
-        // random int between 0 & 14
-        const randomSolution = json[Math.floor(Math.random() * json.length)]
-        setSolution(randomSolution.word) //to only grab the word object
+    
+    fetch('/word-bank.csv')
+      .then(res => res.text())
+      .then(text => {
+        const solutions = text
+          .split('\n')
+          .map(solution => solution.trim().toLowerCase())
+          .filter(solution => solution.length > 0)
+        // random int 
+        const randomSolution = solutions[Math.floor(Math.random() * solutions.length)]
+        setSolution(randomSolution) 
       })
-  }, [setSolution])
+
+    fetch('/valid-words.csv')
+      .then(res => res.text())
+      .then(text => {
+        const words = text
+          .split('\n')
+          .map(word => word.trim().toLowerCase())
+          .filter(word => word.length > 0)
+        setValidWords(words) 
+      })      
+  }, [])
 
   return (
     <div className="App">
       <h1>Wordle</h1>
-      {solution && <Wordle solution = {solution}/>}
+      {solution && validWords.length > 0 && <Wordle solution = {solution} validWords={validWords}/>}
     </div>
   )
 }
@@ -25,9 +41,23 @@ function App() {
 export default App
 
 /* localStorage.removeItem(“wordlestruckStatistics”); */
+/*
+my own solutions...
+
+fetch('/solutions.csv')
+      .then(res => res.text())
+      .then(text => {
+        const solutions = text
+          .split('\n')
+          .map(word => word.trim().toLowerCase())
+          .filter(word => word.length > 0)
+        const randomSolution = solutions[Math.floor(Math.random() * solutions.length)]
+        setSolution(randomSolution)
+      })
+*/
+
 
 /* 
-
 data we need to track:
   -- solution
     -- 5 letter string, e.g. 'drain'
