@@ -14,13 +14,13 @@ export default function Wordle({ solution }) {
         if(isCorrect || turn > 5){
             setTimeout(() => setShowModal(true), 2000)
             if (!localStorage.wordlestruckStatistics) {
-                localStorage.wordlestruckStatistics = JSON.stringify([
+                localStorage.wordlestruckStatistics = JSON.stringify([ //if no statistics exist, new array
                     ...Array(7).fill(0),
                 ]);
             }
-            let objStatistics = JSON.parse(localStorage.wordlestruckStatistics);
-            let index = isCorrect ? turn : 0;
-            objStatistics[index] = Number(objStatistics[index]) + 1;
+            let objStatistics = JSON.parse(localStorage.wordlestruckStatistics); //string to array
+            let index = isCorrect ? turn : 0; //if true turn, if false 0
+            objStatistics[index] = Number(objStatistics[index]) + 1; //increment count for reuslt
             localStorage.wordlestruckStatistics = JSON.stringify(objStatistics);
         } else {
             window.addEventListener("keyup", handleKeyup);
